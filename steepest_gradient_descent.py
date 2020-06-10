@@ -1,10 +1,9 @@
-#! /usr/bin/python3
-#! -*- coding: utf-8 -*-
+# /usr/bin/python3
+# -*- coding: utf-8 -*-
 
 '''
 
-Gradient Descent to Solve Linear Function Example
-
+Steepest Gradient Descent to solve Linear Function Example
 author: flztiii
 
 '''
@@ -30,23 +29,23 @@ def main():
     
     # set initial point
     x = np.array([0.0, 0.0, 0.0]).T
-    learning_rate = 0.01
     threshold = 1e-10
     iteration_num = 0
-    
+
     gradient = df(x)
     # start iteration
     while np.linalg.norm(gradient) > threshold:
-        # update new point
-        x = x - learning_rate * gradient
+        # calculate the learning rate
+        learning_rate = np.dot(gradient.T, gradient) / np.dot(np.dot(gradient.T, Q), gradient)
+        # update point
+        x = x - 0.01 * learning_rate * gradient
         # update gradient
         gradient = df(x)
-        # update num
+        # update iteration number
         iteration_num += 1
     print('result is: ',x)
     print('calculated min value is: ', f(x))
     print('iteration number is: ', iteration_num)
-
 
 if __name__ == "__main__":
     main()

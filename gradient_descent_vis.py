@@ -10,9 +10,12 @@ author: flztiii
 '''
 
 import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
-Q = np.array([[6,8,1],[1, 4, 5],[7, 1, 3]])
-b = np.array([5.2, 1.3, 4.4])
+Q = np.array([[6,8],[1, 4]])
+b = np.array([5.2, 1.3])
 
 # the objective funtion
 def f(x):
@@ -27,9 +30,13 @@ def main():
     ground_truth = np.dot(np.linalg.inv(Q), b)
     print('groud truth is: ', ground_truth)
     print('true min value is:', f(ground_truth))
+
+    # visualization prepare
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
     
     # set initial point
-    x = np.array([0.0, 0.0, 0.0]).T
+    x = np.array([0.0, 0.0]).T
     learning_rate = 0.01
     threshold = 1e-10
     iteration_num = 0
@@ -43,6 +50,19 @@ def main():
         gradient = df(x)
         # update num
         iteration_num += 1
+
+        # visualization surface
+        if iteration_num%10 == 0:
+            X = np.arange(-2, 2, 0.1)
+            Y = np.arange(-2, 2, 0.1)
+            X, Y = np.meshgrid(X,Y)
+            Z = np.zeros_like(X)
+            for i in range(0, X.shape[0]):
+                for j in range(0, X.shape[1]):
+                    Z[i, j] = f(np.array([X[i, j], Y[i, j]]).T)
+            ax.plot_surface(X, Y, Z)
+            plt.pause(0.01)
+
     print('result is: ',x)
     print('calculated min value is: ', f(x))
     print('iteration number is: ', iteration_num)
