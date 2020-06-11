@@ -13,7 +13,6 @@ import numpy as np
 
 Q = np.array([[6, 3, 5],[3, 2, 2],[5, 2, 7]])
 b = np.array([[5.2, 1.3, 4.4]]).T
-EPS = 1e-10
 
 # the objective funtion
 def f(x):
@@ -32,13 +31,13 @@ def main():
     # set initial point
     x = np.array([[10.0, 10.0, 10.0]]).T
     threshold = 1e-10
-    iteration_num = 0
+    n = 3
 
     gradient = df(x)
     d = -gradient
 
     # start iteration
-    while np.linalg.norm(gradient) > threshold:
+    for iteration_num in range(0, n):
         # calculate learning_rate
         alpha = -np.dot(gradient.T, d) / np.dot(np.dot(d.T, Q), d)
         # update point
@@ -49,11 +48,9 @@ def main():
         beta = np.dot(np.dot(gradient.T, Q), d) / np.dot(np.dot(d.T, Q), d)
         # update descent direction
         d = -gradient + beta * d
-        # update num
-        iteration_num += 1
     print('result is: ',x)
     print('calculated min value is: ', f(x))
-    print('iteration number is: ', iteration_num)
+    print('iteration number is: ', n)
 
 if __name__ == "__main__":
     main()
