@@ -13,8 +13,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-Q = np.array([[6,8],[1, 4]])
-b = np.array([5.2, 1.3])
+Q = np.array([[6, 1],[1, 4]])
+b = np.array([5.2, 1.3]).T
 
 # the objective funtion
 def f(x):
@@ -35,7 +35,7 @@ def main():
     ax = fig.add_subplot(111, projection='3d')
     
     # set initial point
-    x = np.array([10.0, 10.0]).T
+    x = np.array([20.0, 20.0]).T
     threshold = 1e-10
     iteration_num = 0
     recorder = [x]
@@ -55,7 +55,7 @@ def main():
         recorder.append(x)
 
         # visualization
-        if iteration_num%2 == 0:
+        if iteration_num%1 == 0:
             plt.cla()
             # visualize surface
             X = np.arange(-15, 15, 0.1)
@@ -98,6 +98,7 @@ def main():
     ax.plot3D(recorder_x, recorder_y, recorder_z, color='r', marker= '.')
     ax.scatter([recorder_x[-1]], [recorder_y[-1]], [recorder_y[-1]], marker='*')
     plt.show()
+    print(recorder_z)
 
 if __name__ == "__main__":
     main()

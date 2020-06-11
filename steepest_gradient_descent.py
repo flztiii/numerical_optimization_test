@@ -10,7 +10,7 @@ author: flztiii
 
 import numpy as np
 
-Q = np.array([[6,8,1],[1, 4, 5],[7, 1, 3]])
+Q = np.array([[6, 3, 5],[3, 2, 2],[5, 2, 7]])
 b = np.array([5.2, 1.3, 4.4]).T
 
 # the objective funtion
@@ -36,12 +36,7 @@ def main():
     # start iteration
     while np.linalg.norm(gradient) > threshold:
         # calculate the learning rate
-        learning_rate = 0.01 * np.dot(gradient.T, gradient) / np.dot(np.dot(gradient.T, Q), gradient)
-        # learning_rate = 1.0
-        # alpha = 0.8
-        # while f(x - learning_rate * gradient) > f(x) - 1e-4 * learning_rate * np.dot(gradient.T, gradient):
-        #     learning_rate *= alpha
-
+        learning_rate = np.dot(gradient.T, gradient) / np.dot(np.dot(gradient.T, Q), gradient)
         # update point
         x = x - learning_rate * gradient
         # update gradient

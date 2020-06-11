@@ -14,7 +14,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-Q = np.array([[6,8],[1, 4]])
+Q = np.array([[6, 1],[1, 4]])
 b = np.array([5.2, 1.3]).T
 
 # the objective funtion
@@ -55,7 +55,7 @@ def main():
         recorder.append(x)
 
        # visualization
-        if iteration_num%2 == 0:
+        if iteration_num%10 == 0:
             plt.cla()
             # visualize surface
             X = np.arange(-1.5, 1.5, 0.1)
