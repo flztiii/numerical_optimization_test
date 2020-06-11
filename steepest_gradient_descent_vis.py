@@ -1,10 +1,9 @@
-#! /usr/bin/python3
-#! -*- coding: utf-8 -*-
+# /usr/bin/python3
+# -*- coding: utf-8 -*-
 
 '''
 
-Gradient Descent to Solve Linear Function Example
-
+Steepest Gradient Descent to Solve Linear Function Example
 author: flztiii
 
 '''
@@ -15,7 +14,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 Q = np.array([[6,8],[1, 4]])
-b = np.array([5.2, 1.3]).T
+b = np.array([5.2, 1.3])
 
 # the objective funtion
 def f(x):
@@ -36,30 +35,31 @@ def main():
     ax = fig.add_subplot(111, projection='3d')
     
     # set initial point
-    x = np.array([-1.0, -1.0]).T
-    learning_rate = 0.01
-    threshold = 1e-4
+    x = np.array([10.0, 10.0]).T
+    threshold = 1e-10
     iteration_num = 0
     recorder = [x]
-    
+
     gradient = df(x)
     # start iteration
     while np.linalg.norm(gradient) > threshold:
-        # update new point
+        # calculate the learning rate
+        learning_rate = np.dot(gradient.T, gradient) / np.dot(np.dot(gradient.T, Q), gradient)
+        # update point
         x = x - learning_rate * gradient
         # update gradient
         gradient = df(x)
-        # update num
+        # update iteration number
         iteration_num += 1
         # update recorder
         recorder.append(x)
 
-       # visualization
+        # visualization
         if iteration_num%2 == 0:
             plt.cla()
             # visualize surface
-            X = np.arange(-1.5, 1.5, 0.1)
-            Y = np.arange(-1.5, 1.5, 0.1)
+            X = np.arange(-15, 15, 0.1)
+            Y = np.arange(-15, 15, 0.1)
             X, Y = np.meshgrid(X,Y)
             Z = np.zeros_like(X)
             for i in range(0, X.shape[0]):
@@ -81,8 +81,8 @@ def main():
 
     plt.cla()
     # visualize surface
-    X = np.arange(-1.5, 1.5, 0.1)
-    Y = np.arange(-1.5, 1.5, 0.1)
+    X = np.arange(-15, 15, 0.1)
+    Y = np.arange(-15, 15, 0.1)
     X, Y = np.meshgrid(X,Y)
     Z = np.zeros_like(X)
     for i in range(0, X.shape[0]):
@@ -98,7 +98,6 @@ def main():
     ax.plot3D(recorder_x, recorder_y, recorder_z, color='r', marker= '.')
     ax.scatter([recorder_x[-1]], [recorder_y[-1]], [recorder_y[-1]], marker='*')
     plt.show()
-
 
 if __name__ == "__main__":
     main()

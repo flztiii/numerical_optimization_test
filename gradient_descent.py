@@ -12,11 +12,11 @@ author: flztiii
 import numpy as np
 
 Q = np.array([[6,8,1],[1, 4, 5],[7, 1, 3]])
-b = np.array([5.2, 1.3, 4.4])
+b = np.array([5.2, 1.3, 4.4]).T
 
 # the objective funtion
 def f(x):
-    return 0.5 * np.dot(x.T, np.dot(Q, x)) - np.dot(b.T, x)
+    return 0.5 * np.dot(np.dot(x.T, Q), x) - np.dot(b.T, x)
 
 # first derivative of the objective function
 def df(x):

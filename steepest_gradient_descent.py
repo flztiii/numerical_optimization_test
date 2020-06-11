@@ -3,7 +3,7 @@
 
 '''
 
-Steepest Gradient Descent to solve Linear Function Example
+Steepest Gradient Descent to Solve Linear Function Example
 author: flztiii
 
 '''
@@ -11,11 +11,11 @@ author: flztiii
 import numpy as np
 
 Q = np.array([[6,8,1],[1, 4, 5],[7, 1, 3]])
-b = np.array([5.2, 1.3, 4.4])
+b = np.array([5.2, 1.3, 4.4]).T
 
 # the objective funtion
 def f(x):
-    return 0.5 * np.dot(x.T, np.dot(Q, x)) - np.dot(b.T, x)
+    return 0.5 * np.dot(np.dot(x.T, Q), x) - np.dot(b.T, x)
 
 # first derivative of the objective function
 def df(x):
@@ -36,9 +36,14 @@ def main():
     # start iteration
     while np.linalg.norm(gradient) > threshold:
         # calculate the learning rate
-        learning_rate = np.dot(gradient.T, gradient) / np.dot(np.dot(gradient.T, Q), gradient)
+        learning_rate = 0.01 * np.dot(gradient.T, gradient) / np.dot(np.dot(gradient.T, Q), gradient)
+        # learning_rate = 1.0
+        # alpha = 0.8
+        # while f(x - learning_rate * gradient) > f(x) - 1e-4 * learning_rate * np.dot(gradient.T, gradient):
+        #     learning_rate *= alpha
+
         # update point
-        x = x - 0.01 * learning_rate * gradient
+        x = x - learning_rate * gradient
         # update gradient
         gradient = df(x)
         # update iteration number
